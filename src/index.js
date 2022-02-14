@@ -17,6 +17,9 @@ import HippoAppBar from './HippoAppBar';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import { Link as RouterLink } from 'react-router-dom';
 import { blue } from '@mui/material/colors';
+import SignIn from './SignIn';
+import ApprovalRequest from './ApprovalRequest';
+import ApprovalSubmitted from './ApprovalSubmitted';
 
 const theme = createTheme({
   palette: {
@@ -33,8 +36,7 @@ function Home() {
   const navigate = useNavigate();
 
   return (
-    <>
-      <HippoAppBar />      
+    <>      
       <Grid
         container
         spacing={0}
@@ -68,26 +70,26 @@ function Home() {
           Get me a mortgage!
         </Button>
         <ArrowUpwardIcon sx={{ fontSize: 80 }} color="primary"></ArrowUpwardIcon>
-</Grid>
-
-
-      <nav>
-        <Link href="login">Login</Link>
-      </nav>
+      </Grid>
     </>
   );
 }
 
 function Login() {
+  const navigate = useNavigate();
+
   return (
     <>
-      <main>
-        <h2>Login</h2>
-        <p>
-          That feels like an existential question, don't you
-          think?
-        </p>
-      </main>
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justifyContent="top"
+        style={{ minHeight: '100vh', padding: '50px' }}
+      >
+        <SignIn />
+      </Grid>
     </>
   );
 }
@@ -95,9 +97,12 @@ function Login() {
 function App() {
   return <ThemeProvider theme={theme}>  
     <BrowserRouter>
+      <HippoAppBar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="login" element={<Login />} />
+        <Route path="approval" element={<ApprovalRequest />} />
+        <Route path="approvalSubmitted" element={<ApprovalSubmitted />} />
       </Routes>
       {/* <Button variant="contained">Hello World</Button> */}
     </BrowserRouter>

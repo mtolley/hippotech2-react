@@ -25,10 +25,10 @@ export default function HippoAppBar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={ () => navigate('/') }>
             HippoTech
           </Typography>
-          <Button color="inherit" onClick={ () => navigate('login') }>Login</Button>
+          <Button color="inherit" onClick={ () => navigate('/login') }>Login</Button>
         </Toolbar>
       </AppBar>
     </Box>
