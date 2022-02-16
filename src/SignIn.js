@@ -12,6 +12,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import UserContext from './UserContext';
+import server from './server.js';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from './Auth.js';
 
 function Copyright(props) {
   return (
@@ -28,8 +32,13 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignIn() {
-  const handleSubmit = (event) => {
+export default function SignIn({ redirectUrl }) {
+  const { user, signin, signout } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  let from = location.state?.from?.pathname || "/";
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
@@ -37,6 +46,18 @@ export default function SignIn() {
       email: data.get('email'),
       password: data.get('password'),
     });
+    //const success = await server.loginAsync(data.get('email'), data.get('password'));
+    const success = await signin(data.get('email'), data.get('password'));
+    if (success) {
+      console.log('Login succeeded on server');
+      navigate(from, { replace: true });
+      //setUser(data.get('email'));
+      //redirectUrl ? navigate(redirectUrl) : navigate('/');
+    } else {
+      console.log('Login did not succeed on server');
+    }
+
+    //await app.loginAsync(data.get('email'), data.get('password'));
   };
 
   return (

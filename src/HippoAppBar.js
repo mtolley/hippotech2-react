@@ -7,9 +7,18 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from 'react-router-dom';
+import UserContext from './UserContext';
+import { useAuth } from './Auth';
+import server from './server';
 
 export default function HippoAppBar() {
   const navigate = useNavigate();
+  //const { user, setUser } = React.useContext(UserContext);
+  const { user, signin, signout } = useAuth();
+
+  async function handleLogout() {
+    await signout();
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -28,7 +37,11 @@ export default function HippoAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={ () => navigate('/') }>
             HippoTech
           </Typography>
-          <Button color="inherit" onClick={ () => navigate('/login') }>Login</Button>
+          { 
+            !!user ? <Button color="inherit" onClick={ async () =>  await handleLogout() }>Logout</Button> 
+                             : <Button color="inherit" onClick={ () => navigate('/login') }>Login</Button>
+          }
+          
         </Toolbar>
       </AppBar>
     </Box>

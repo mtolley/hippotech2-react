@@ -5,7 +5,7 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate, Navigate, useLocation } from "react-router-dom";
 
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
@@ -20,6 +20,10 @@ import { blue } from '@mui/material/colors';
 import SignIn from './SignIn';
 import ApprovalRequest from './ApprovalRequest';
 import ApprovalSubmitted from './ApprovalSubmitted';
+//import UserContext from './UserContext';
+import { UserProvider } from './UserContext';
+import server from './server.js';
+import { useAuth, AuthProvider, RequireAuth } from './Auth';
 
 const theme = createTheme({
   palette: {
@@ -34,7 +38,7 @@ const theme = createTheme({
 
 function Home() {
   const navigate = useNavigate();
-
+  
   return (
     <>      
       <Grid
@@ -66,7 +70,7 @@ function Home() {
         <Button 
           sx={{ fontSize: 20 }} 
           variant="contained"
-          onClick={ () => navigate('login') }>
+          onClick={ () => navigate('/approval') }>
           Get me a mortgage!
         </Button>
         <ArrowUpwardIcon sx={{ fontSize: 80 }} color="primary"></ArrowUpwardIcon>
@@ -94,19 +98,23 @@ function Login() {
   );
 }
 
+
+
 function App() {
-  return <ThemeProvider theme={theme}>  
-    <BrowserRouter>
-      <HippoAppBar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="login" element={<Login />} />
-        <Route path="approval" element={<ApprovalRequest />} />
-        <Route path="approvalSubmitted" element={<ApprovalSubmitted />} />
-      </Routes>
-      {/* <Button variant="contained">Hello World</Button> */}
-    </BrowserRouter>
-  </ThemeProvider>;
+  return <AuthProvider>
+    <ThemeProvider theme={theme}>  
+      <BrowserRouter>
+        <HippoAppBar />
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="login" element={<Login />} />
+          <Route path="approval" element={<RequireAuth><ApprovalRequest /> </RequireAuth>} />
+          <Route path="approvalSubmitted" element={<RequireAuth><ApprovalSubmitted /></RequireAuth>} />
+        </Routes>
+        {/* <Button variant="contained">Hello World</Button> */}
+      </BrowserRouter>
+    </ThemeProvider>
+  </AuthProvider>;
 }
 
 ReactDOM.render(
