@@ -17,19 +17,7 @@ import PaymentForm from './PaymentForm';
 import Review from './Review';
 import UserContext from './UserContext.js';
 import { useNavigate } from 'react-router-dom';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        HippoTechnologies
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import Copyright from './Copyright.js';
 
 const steps = ['Property details', 'Payment details', 'Review and submit'];
 

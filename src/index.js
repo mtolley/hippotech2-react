@@ -8,22 +8,20 @@ import '@fontsource/roboto/700.css';
 import { BrowserRouter, Routes, Route, useNavigate, Navigate, useLocation } from "react-router-dom";
 
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
 import { Typography } from '@mui/material';
 import { Box } from '@mui/material';
 import { Grid } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import HippoAppBar from './HippoAppBar';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import { Link as RouterLink } from 'react-router-dom';
 import { blue } from '@mui/material/colors';
 import SignIn from './SignIn';
 import ApprovalRequest from './ApprovalRequest';
 import ApprovalSubmitted from './ApprovalSubmitted';
-//import UserContext from './UserContext';
-import { UserProvider } from './UserContext';
-import server from './server.js';
-import { useAuth, AuthProvider, RequireAuth } from './Auth';
+import MyMortgages from './MyMortgages';
+
+import { AuthProvider, RequireAuth } from './Auth';
+import Copyright from './Copyright';
 
 const theme = createTheme({
   palette: {
@@ -74,7 +72,9 @@ function Home() {
           Get me a mortgage!
         </Button>
         <ArrowUpwardIcon sx={{ fontSize: 80 }} color="primary"></ArrowUpwardIcon>
+        <Copyright />
       </Grid>
+      
     </>
   );
 }
@@ -110,6 +110,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="approval" element={<RequireAuth><ApprovalRequest /> </RequireAuth>} />
           <Route path="approvalSubmitted" element={<RequireAuth><ApprovalSubmitted /></RequireAuth>} />
+          <Route path="myMortgages" element={<MyMortgages />} />
         </Routes>
         {/* <Button variant="contained">Hello World</Button> */}
       </BrowserRouter>
