@@ -6,7 +6,25 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
-export default function PaymentForm() {
+export default function PaymentForm({ fields, onChange }) {
+  function handleChange(event) {
+    let newFields;
+
+    if (event.target.name === 'iAgree') {
+      newFields = { ...fields, iAgree: fields.iAgree === "no" ? "yes" : "no" };
+    } else {
+      newFields = { ...fields, [event.target.id]: event.target.value };
+    }
+
+    newFields.valid = !!newFields.cardName 
+                      && !!newFields.cardNumber 
+                      && !!newFields.expDate
+                      && !!newFields.cvv                  
+                      && newFields.iAgree === "yes";
+                                        
+    onChange(newFields);
+  }
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -21,6 +39,8 @@ export default function PaymentForm() {
             fullWidth
             autoComplete="cc-name"
             variant="standard"
+            value={fields.cardName}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -31,6 +51,8 @@ export default function PaymentForm() {
             fullWidth
             autoComplete="cc-number"
             variant="standard"
+            value={fields.cardNumber}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -41,6 +63,8 @@ export default function PaymentForm() {
             fullWidth
             autoComplete="cc-exp"
             variant="standard"
+            value={fields.expDate}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -52,11 +76,13 @@ export default function PaymentForm() {
             fullWidth
             autoComplete="cc-csc"
             variant="standard"
+            value={fields.cvv}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12}>
           <FormControlLabel
-            control={<Checkbox color="secondary" name="saveCard" value="yes" />}
+            control={<Checkbox color="secondary" name="iAgree" checked={fields.iAgree==="yes"} value={fields.iAgree} onChange={handleChange}/>}
             label="I agree to pay a reservation fee of $1"
           />
         </Grid>

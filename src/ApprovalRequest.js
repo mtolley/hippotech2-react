@@ -33,29 +33,66 @@ function Copyright() {
 
 const steps = ['Property details', 'Payment details', 'Review and submit'];
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <AddressForm />;
-    case 1:
-      return <PaymentForm />;
-    case 2:
-      return <Review />;
-    default:
-      throw new Error('Unknown step');
-  }
-}
-
 export default function ApprovalRequest() {
-
-
   const [activeStep, setActiveStep] = React.useState(0);
+  const [isValid, setIsValid] = React.useState(false);
+  const [addressState, setAddressState] = React.useState({
+    address1: "",
+    address2: "",
+    zip: "",
+    state: "",
+    purchasePrice: "",
+    amountToBorrow: "", 
+    iUnderstand: false,
+    valid: false
+  });
+  const [paymentState, setPaymentState] = React.useState({
+    cardName: "",
+    cardNumber: "",
+    expDate: "",
+    cvv: "",
+    iAgree: "no",
+    valid: false
+  });
+
+  function handleAddressFormChange(newState) {
+    setAddressState(newState);
+    setIsValid(newState.valid);
+  }
+
+  function handlePaymentFormChange(newState) {
+    setPaymentState(newState);
+    setIsValid(newState.valid);
+  }
+
+  function getStepContent(step) {
+    switch (step) {
+      case 0:
+        return <AddressForm fields={addressState} onChange={handleAddressFormChange}/>;
+      case 1:
+        return <PaymentForm fields={paymentState} onChange={handlePaymentFormChange}/>;
+      case 2:
+        return <Review />;
+      default:
+        throw new Error('Unknown step');
+    }
+  }
 
   const handleNext = () => {
+    if (activeStep === 0) {
+      setIsValid(paymentState.valid);
+    } else if (activeStep === 1) {
+      setIsValid(true);
+    }
     setActiveStep(activeStep + 1);
   };
 
   const handleBack = () => {
+    if (activeStep === 2) {
+      setIsValid(paymentState.valid);
+    } else if (activeStep === 1) {
+      setIsValid(addressState.valid);
+    }
     setActiveStep(activeStep - 1);
   };
 
@@ -97,6 +134,7 @@ export default function ApprovalRequest() {
 
                   <Button
                     variant="contained"
+                    disabled={!isValid}
                     onClick={handleNext}
                     sx={{ mt: 3, ml: 1 }}
                   >

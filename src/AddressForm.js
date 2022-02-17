@@ -4,8 +4,36 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import { InputAdornment } from '@mui/material';
+import { useState } from 'react';
+import { ElevenMpTwoTone } from '@mui/icons-material';
 
-export default function AddressForm() {
+function CurrencyField(props) {
+  return <TextField {...props}
+    InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment> }}
+  />
+}
+
+
+export default function AddressForm({ fields, onChange }) {
+  function handleInput(event) {
+    let newFields;
+    console.log(event.target.name);
+    if (event.target.name === 'iUnderstand') {
+      newFields = { ...fields, iUnderstand: event.target.checked };
+    } else {
+      newFields = { ...fields, [event.target.name]: event.target.value };
+    }
+
+    newFields.valid = !!newFields.address1 
+                      && !!newFields.zip 
+                      && !!newFields.purchasePrice
+                      && !!newFields.amountToBorrow                  
+                      && newFields.iUnderstand;
+                                        
+    onChange(newFields);
+  }
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -21,6 +49,8 @@ export default function AddressForm() {
             fullWidth
             autoComplete="shipping address-line1"
             variant="standard"
+            value={fields.address1}
+            onChange={handleInput}
           />
         </Grid>
         <Grid item xs={12}>
@@ -31,6 +61,8 @@ export default function AddressForm() {
             fullWidth
             autoComplete="shipping address-line2"
             variant="standard"
+            value={fields.address2}
+            onChange={handleInput}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -42,6 +74,8 @@ export default function AddressForm() {
             fullWidth
             autoComplete="zipcode"
             variant="standard"
+            value={fields.zip}
+            onChange={handleInput}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -51,6 +85,8 @@ export default function AddressForm() {
             label="State/Province/Region"
             fullWidth
             variant="standard"
+            value={fields.state}
+            onChange={handleInput}
           />
         </Grid>
         <Grid item xs={12} sm={12}>
@@ -59,7 +95,7 @@ export default function AddressForm() {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
+          <CurrencyField
             required
             id="purchasePrice"
             name="purchasePrice"
@@ -67,10 +103,12 @@ export default function AddressForm() {
             fullWidth
             autoComplete="Purchase price"
             variant="standard"
+            value={fields.purchasePrice}
+            onChange={handleInput}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
+          <CurrencyField
             required
             id="amountToBorrow"
             name="amountToBorrow"
@@ -78,11 +116,13 @@ export default function AddressForm() {
             fullWidth
             autoComplete="amount to borrow"
             variant="standard"
+            value={fields.amountToBorrow}
+            onChange={handleInput}
           />
         </Grid>
         <Grid item xs={12}>
           <FormControlLabel
-            control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
+            control={<Checkbox color="secondary" name="iUnderstand" checked={fields.iUnderstand} onChange={handleInput} />}
             label="I understand that my home may be at risk if I don't keep up payments on a mortgage."
           />
         </Grid>
