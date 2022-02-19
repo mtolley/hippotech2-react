@@ -109,8 +109,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="login" element={<Login />} />
           <Route path="approval" element={<RequireAuth><ApprovalRequest /> </RequireAuth>} />
-          <Route path="approvalSubmitted" element={<RequireAuth><ApprovalSubmitted /></RequireAuth>} />
-          <Route path="myMortgages" element={<MyMortgages />} />
+          <Route path="myMortgages" element={<RequireAuth><MyMortgages /></RequireAuth>} />
         </Routes>
         {/* <Button variant="contained">Hello World</Button> */}
       </BrowserRouter>

@@ -24,7 +24,7 @@ export function AuthProvider({ children }) {
   let [user, setUser] = React.useState(null);
   let signin = async (username, password, callback) => {
     const result = await server.loginAsync(username, password);
-    if (result) setUser(username);
+    if (result) setUser({ username });
     return result;
   };
   let signout = async () => {

@@ -27,8 +27,11 @@ export default function HippoAppBar() {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const handleMenuClick = (newUrl) => {
     setAnchorEl(null);
+    if (newUrl) {
+      navigate(newUrl);
+    }
   };
 
   return (
@@ -51,7 +54,7 @@ export default function HippoAppBar() {
         aria-labelledby="demo-positioned-button"
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}
+        onClose={handleMenuClick}
         anchorOrigin={{
           vertical: 'top',
           horizontal: 'left',
@@ -61,15 +64,15 @@ export default function HippoAppBar() {
           horizontal: 'left',
         }}
       >
-        <MenuItem onClick={handleClose}>My Mortgages</MenuItem>
-        <MenuItem onClick={handleClose}>Blog</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={() => handleMenuClick('/myMortgages')}>My Mortgages</MenuItem>
+        <MenuItem onClick={() => handleMenuClick('/blog')}>Blog</MenuItem>
+        <MenuItem onClick={async () => { await handleLogout(); handleMenuClick('/'); }}>Logout</MenuItem>
       </Menu>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={ () => navigate('/') }>
             HippoTech
           </Typography>
           { 
-            !!user ? <Button color="inherit" onClick={ async () =>  await handleLogout() }>Logout</Button> 
+            !!user ? <Button color="inherit" onClick={ async () =>  { await handleLogout(); navigate('/'); }}>Logout</Button> 
                              : <Button color="inherit" onClick={ () => navigate('/login') }>Login</Button>
           }
           

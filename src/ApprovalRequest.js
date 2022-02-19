@@ -18,6 +18,8 @@ import Review from './Review';
 import UserContext from './UserContext.js';
 import { useNavigate } from 'react-router-dom';
 import Copyright from './Copyright.js';
+import server from './server';
+import Grid from '@mui/material/Grid';
 
 const steps = ['Property details', 'Payment details', 'Review and submit'];
 
@@ -43,6 +45,15 @@ export default function ApprovalRequest() {
     valid: false
   });
 
+  function addressToArray() {
+    let result = [];
+    if (addressState.address1) result.push(addressState.address1);
+    if (addressState.address2) result.push(addressState.address2);
+    if (addressState.state) result.push(addressState.state);
+    if (addressState.zip) result.push(addressState.zip);
+    return result;
+  }
+
   function handleAddressFormChange(newState) {
     setAddressState(newState);
     setIsValid(newState.valid);
@@ -60,7 +71,7 @@ export default function ApprovalRequest() {
       case 1:
         return <PaymentForm fields={paymentState} onChange={handlePaymentFormChange}/>;
       case 2:
-        return <Review />;
+        return <Review addresses={addressToArray()} cardDetails={paymentState} />;
       default:
         throw new Error('Unknown step');
     }
@@ -71,6 +82,16 @@ export default function ApprovalRequest() {
       setIsValid(paymentState.valid);
     } else if (activeStep === 1) {
       setIsValid(true);
+    } else if (activeStep === 2) {
+      console.log("Submitting...");
+      server.requestApproval({
+        address1: addressState.address1,
+        address2: addressState.address2, 
+        zip: addressState.zip, 
+        state: addressState.state, 
+        purchasePrice: addressState.purchasePrice, 
+        amountToBorrow: addressState.amountToBorrow
+      }, {});
     }
     setActiveStep(activeStep + 1);
   };
@@ -102,13 +123,38 @@ export default function ApprovalRequest() {
             {activeStep === steps.length ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
-                  Thank you for your order.
+                  Thank you for your mortgage approval request
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order
-                  confirmation, and will send you an update when your order has
-                  shipped.
+                  We have emailed you confirmation of the request,
+                  and will send you an update when your request has
+                  processed. You can check on the status of your
+                  request at any time: just click on the menu at the
+                  top left and select "My Mortages"!
                 </Typography>
+                <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justifyContent="top"
+          style={{ padding: '50px' }}
+        >
+                <Box
+            align="center"
+            component="img"
+            sx={{
+              height: 200,
+              width: 200,
+              padding:5
+              // maxHeight: { xs: 233, md: 167 },
+              // maxWidth: { xs: 350, md: 250 },
+            }}
+            alt="The house from the offer."
+            src="hippo-back.svg"
+          />
+
+          </Grid>
               </React.Fragment>
             ) : (
               <React.Fragment>
@@ -126,7 +172,7 @@ export default function ApprovalRequest() {
                     onClick={handleNext}
                     sx={{ mt: 3, ml: 1 }}
                   >
-                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                    {activeStep === steps.length - 1 ? 'Submit !' : 'Next'}
                   </Button>
                 </Box>
               </React.Fragment>

@@ -14,11 +14,11 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import server from './server';
 
-
-function createData(address, status, purchasePrice, amountToBorrow) {
+function createData(address1, status, purchasePrice, amountToBorrow) {
   return {
-    address,
+    address1,
     status,
     purchasePrice,
     amountToBorrow,
@@ -58,7 +58,7 @@ function Row(props) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.address}
+          {row.address1}
         </TableCell>
         <TableCell align="right">{row.status}</TableCell>
         <TableCell align="right">{row.purchasePrice}</TableCell>
@@ -105,7 +105,7 @@ function Row(props) {
 
 Row.propTypes = {
   row: PropTypes.shape({
-    address: PropTypes.string.isRequired,
+    address1: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
     purchasePrice: PropTypes.number.isRequired,
     history: PropTypes.arrayOf(
@@ -120,12 +120,36 @@ Row.propTypes = {
   }).isRequired,
 };
 
-const rows = [
-  createData('1 Funguy Stree, London', "Awaiting Approval", 450000, 400000),
-  createData('35 Infinity Square, New York', "Approved", 1250000, 1000000),
-];
+// const dummyRows = [
+//   createData('1 Funguy Stree, London', "Awaiting Approval", 450000, 400000),
+//   createData('35 Infinity Square, New York', "Approved", 1250000, 1000000),
+// ];
+
+
 
 export default function MyMortgages() {
+  const [rows, setRows] = React.useState([]);
+  const [dataLoaded, setDataLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    console.log("MyMortgages effect()");
+    async function loadData() {
+      console.log("awaiting...");
+
+      const myMortgages = await server.getMyMortgagesAsync();
+      console.log(myMortgages);
+      setRows(myMortgages);
+      console.log("...awaited.");
+    }
+    if (!dataLoaded) {
+      loadData().catch((error) => {
+        console.log("Error during loadData()");
+        console.log(error);
+      });
+      setDataLoaded(true);
+    }
+  }, [dataLoaded]);
+
   return (
     <Grid
     container
@@ -148,7 +172,7 @@ export default function MyMortgages() {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <Row key={row.address} row={row} />
+            <Row key={row.address1} row={row} />
           ))}
         </TableBody>
       </Table>
