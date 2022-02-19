@@ -17,8 +17,8 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import { blue } from '@mui/material/colors';
 import SignIn from './SignIn';
 import ApprovalRequest from './ApprovalRequest';
-import ApprovalSubmitted from './ApprovalSubmitted';
 import MyMortgages from './MyMortgages';
+import Blog from './blog/Blog';
 
 import { AuthProvider, RequireAuth } from './Auth';
 import Copyright from './Copyright';
@@ -33,6 +33,7 @@ const theme = createTheme({
     },
   },
 });
+
 
 function Home() {
   const navigate = useNavigate();
@@ -51,14 +52,15 @@ function Home() {
           align="center"
           component="img"
           sx={{
-            height: 200,
-            width: 200,
+            height: 400,
+            width: 600,
             padding:5
             // maxHeight: { xs: 233, md: 167 },
             // maxWidth: { xs: 350, md: 250 },
           }}
           alt="The house from the offer."
-          src="hippo-front.svg"
+          // src="hippo-front.svg"
+          src="homeowner.jpg"
         />
 
         <Typography variant="h5" align="center" color="text.secondary" component="p">
@@ -108,6 +110,7 @@ function App() {
         <Routes>
           <Route index element={<Home />} />
           <Route path="login" element={<Login />} />
+          <Route path="blog" element={<Blog />} />
           <Route path="approval" element={<RequireAuth><ApprovalRequest /> </RequireAuth>} />
           <Route path="myMortgages" element={<RequireAuth><MyMortgages /></RequireAuth>} />
         </Routes>
