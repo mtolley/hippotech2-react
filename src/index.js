@@ -18,6 +18,7 @@ import { blue } from '@mui/material/colors';
 import SignIn from './SignIn';
 import ApprovalRequest from './ApprovalRequest';
 import MyMortgages from './MyMortgages';
+import FullPost from './blog/FullPost';
 import Blog from './blog/Blog';
 
 import { AuthProvider, RequireAuth } from './Auth';
@@ -110,11 +111,12 @@ function App() {
         <Routes>
           <Route index element={<Home />} />
           <Route path="login" element={<Login />} />
-          <Route path="blog" element={<Blog />} />
+          <Route path="blog" element={<Blog />}>
+          </Route>
+          <Route path="blog/:blogId" element={<FullPost />} />
           <Route path="approval" element={<RequireAuth><ApprovalRequest /> </RequireAuth>} />
           <Route path="myMortgages" element={<RequireAuth><MyMortgages /></RequireAuth>} />
         </Routes>
-        {/* <Button variant="contained">Hello World</Button> */}
       </BrowserRouter>
     </ThemeProvider>
   </AuthProvider>;

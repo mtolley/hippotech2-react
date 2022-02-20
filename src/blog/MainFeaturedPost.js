@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
+import { BrowserRouter as Router, Route, Link as RouterLink } from "react-router-dom";
 
 function MainFeaturedPost(props) {
   const { post } = props;
@@ -49,7 +50,7 @@ function MainFeaturedPost(props) {
             <Typography variant="h5" color="inherit" paragraph>
               {post.description}
             </Typography>
-            <Link variant="subtitle1" href="#">
+            <Link variant="subtitle1" component={RouterLink} to={"/blog/" + post.id}>
               {post.linkText}
             </Link>
           </Box>

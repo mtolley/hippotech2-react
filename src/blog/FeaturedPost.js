@@ -6,13 +6,16 @@ import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
+import { useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 function FeaturedPost(props) {
   const { post } = props;
-
+  console.log(post);
+  
   return (
     <Grid item xs={12} md={6}>
-      <CardActionArea component="a" href="#">
+      <CardActionArea component={Link} to={"/blog/" + post.id}>
         <Card sx={{ display: 'flex' }}>
           <CardContent sx={{ flex: 1 }}>
             <Typography component="h2" variant="h5">

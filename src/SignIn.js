@@ -16,6 +16,7 @@ import UserContext from './UserContext';
 import server from './server.js';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from './Auth.js';
+import PasswordHint from './PasswordHint';
 
 function Copyright(props) {
   return (
@@ -46,18 +47,14 @@ export default function SignIn({ redirectUrl }) {
       email: data.get('email'),
       password: data.get('password'),
     });
-    //const success = await server.loginAsync(data.get('email'), data.get('password'));
+
     const success = await signin(data.get('email'), data.get('password'));
     if (success) {
       console.log('Login succeeded on server');
       navigate(from, { replace: true });
-      //setUser(data.get('email'));
-      //redirectUrl ? navigate(redirectUrl) : navigate('/');
     } else {
       console.log('Login did not succeed on server');
     }
-
-    //await app.loginAsync(data.get('email'), data.get('password'));
   };
 
   return (
@@ -121,6 +118,7 @@ export default function SignIn({ redirectUrl }) {
                 </Link>
               </Grid>
             </Grid>
+            <PasswordHint></PasswordHint>
           </Box>
         </Box>
   );
