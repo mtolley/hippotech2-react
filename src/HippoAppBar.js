@@ -8,15 +8,14 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useNavigate } from 'react-router-dom';
-import UserContext from './UserContext';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from './Auth';
-import server from './server';
 
 export default function HippoAppBar() {
   const navigate = useNavigate();
   //const { user, setUser } = React.useContext(UserContext);
   const { user, signin, signout } = useAuth();
+  const location = useLocation();
 
   async function handleLogout() {
     await signout();
@@ -73,9 +72,10 @@ export default function HippoAppBar() {
           </Typography>
           { 
             !!user ? <Button color="inherit" onClick={ async () =>  { await handleLogout(); navigate('/'); }}>Logout</Button> 
-                             : <Button color="inherit" onClick={ () => navigate('/login') }>Login</Button>
+                             : <Button color="inherit" onClick={ () => navigate('/login', { state: { from: location}, replace: true}) }>Login</Button>
+
+
           }
-          
         </Toolbar>
       </AppBar>
     </Box>

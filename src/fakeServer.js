@@ -184,9 +184,7 @@ export default class FakeServer {
 
   async submitCommentAsync(postId, text) {
     const post = this.blogPosts.get(parseInt(postId));
-    console.log("post: " + postId);
     if (post !== undefined) {
-      console.log("pushing");
       const user = await this.getUserAsync();
       post.comments.push({ email: user.email, text });
     } 
