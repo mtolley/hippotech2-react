@@ -57,12 +57,12 @@ function Row(props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell class="mortgageAddress" component="th" scope="row">
           {row.address1}
         </TableCell>
-        <TableCell align="right">{row.status}</TableCell>
-        <TableCell align="right">{row.purchasePrice}</TableCell>
-        <TableCell align="right">{row.amountToBorrow}</TableCell>
+        <TableCell class="mortgageStatus" align="right">{row.status}</TableCell>
+        <TableCell class="mortgagePurchasePrice" align="right">{row.purchasePrice}</TableCell>
+        <TableCell class="mortgageAmountToBorrow" align="right">{row.amountToBorrow}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -120,13 +120,6 @@ Row.propTypes = {
   }).isRequired,
 };
 
-// const dummyRows = [
-//   createData('1 Funguy Stree, London', "Awaiting Approval", 450000, 400000),
-//   createData('35 Infinity Square, New York', "Approved", 1250000, 1000000),
-// ];
-
-
-
 export default function MyMortgages() {
   const [rows, setRows] = React.useState([]);
   const [dataLoaded, setDataLoaded] = React.useState(false);
@@ -164,7 +157,7 @@ export default function MyMortgages() {
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell>Address</TableCell>
+            <TableCell >Address</TableCell>
             <TableCell align="right">Status</TableCell>
             <TableCell align="right">Purchase Price</TableCell>
             <TableCell align="right">Amount To Borrow</TableCell>

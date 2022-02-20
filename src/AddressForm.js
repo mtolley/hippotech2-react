@@ -122,7 +122,7 @@ export default function AddressForm({ fields, onChange }) {
         </Grid>
         <Grid item xs={12}>
           <FormControlLabel
-            control={<Checkbox color="secondary" name="iUnderstand" checked={fields.iUnderstand} onChange={handleInput} />}
+            control={<Checkbox color="secondary" id="iUnderstand" name="iUnderstand" checked={fields.iUnderstand} onChange={handleInput} />}
             label="I understand that my home may be at risk if I don't keep up payments on a mortgage."
           />
         </Grid>

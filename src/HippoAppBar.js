@@ -45,6 +45,7 @@ export default function HippoAppBar() {
             // sx={{ mr: 2 }}
             sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
             onClick={handleClick}
+            id="menuIcon"
           >
             <MenuIcon />
           </IconButton>
@@ -63,16 +64,15 @@ export default function HippoAppBar() {
           horizontal: 'left',
         }}
       >
-        <MenuItem onClick={() => handleMenuClick('/myMortgages')}>My Mortgages</MenuItem>
-        <MenuItem onClick={() => handleMenuClick('/blog')}>Blog</MenuItem>
-        <MenuItem onClick={async () => { await handleLogout(); handleMenuClick('/'); }}>Logout</MenuItem>
+        <MenuItem id="myMortgagesMenuItem" onClick={() => handleMenuClick('/myMortgages')}>My Mortgages</MenuItem>
+        <MenuItem id="blogMenuItem" onClick={() => handleMenuClick('/blog')}>Blog</MenuItem>
       </Menu>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={ () => navigate('/') }>
             HippoTech
           </Typography>
           { 
-            !!user ? <Button color="inherit" onClick={ async () =>  { await handleLogout(); navigate('/'); }}>Logout</Button> 
-                             : <Button color="inherit" onClick={ () => navigate('/login', { state: { from: location}, replace: true}) }>Login</Button>
+            !!user ? <Button id="logoutButton" color="inherit" onClick={ async () =>  { await handleLogout(); navigate('/'); }}>Logout</Button> 
+                             : <Button id="loginButton" color="inherit" onClick={ () => navigate('/login', { state: { from: location}, replace: true}) }>Login</Button>
 
 
           }

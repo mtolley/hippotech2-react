@@ -81,7 +81,7 @@ export default function PaymentForm({ fields, onChange }) {
         </Grid>
         <Grid item xs={12}>
           <FormControlLabel
-            control={<Checkbox color="secondary" name="iAgree" checked={fields.iAgree==="yes"} value={fields.iAgree} onChange={handleChange}/>}
+            control={<Checkbox id="iAgree" color="secondary" name="iAgree" checked={fields.iAgree==="yes"} value={fields.iAgree} onChange={handleChange}/>}
             label="I agree to pay a reservation fee of $1"
           />
         </Grid>

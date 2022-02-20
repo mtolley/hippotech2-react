@@ -69,6 +69,7 @@ function Home() {
         </Typography>
         <br/>
         <Button 
+          id="goToApproval"
           sx={{ fontSize: 20 }} 
           variant="contained"
           onClick={ () => navigate('/approval') }>

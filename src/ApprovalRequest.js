@@ -167,6 +167,7 @@ export default function ApprovalRequest() {
                   )}
 
                   <Button
+                    id="nextButton"
                     variant="contained"
                     disabled={!isValid}
                     onClick={handleNext}
