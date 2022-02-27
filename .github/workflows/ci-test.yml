@@ -38,8 +38,6 @@ on: [push]
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
-    env:
-      CI: false
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -47,6 +45,7 @@ jobs:
       # and run all Cypress tests
       - name: Cypress run
         uses: cypress-io/github-action@v2
+        run: CI=false
         with:
           build: export CI=false && npm run build
           start: npm start
