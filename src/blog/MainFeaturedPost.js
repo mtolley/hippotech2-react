@@ -24,7 +24,7 @@ function MainFeaturedPost(props) {
       }}
     >
       {/* Increase the priority of the hero background image */}
-      {<img style={{ display: 'none' }} src={post.image} alt={post.imageText} />}
+      {<img style={{ display: 'none' }} src={post.image} alt="Blog post" />}
       <Box
         sx={{
           position: 'absolute',
@@ -51,7 +51,7 @@ function MainFeaturedPost(props) {
               {post.description}
             </Typography>
             <Link variant="subtitle1" component={RouterLink} to={"/blog/" + post.id}>
-              {post.linkText}
+              Continue reading...
             </Link>
           </Box>
         </Grid>
@@ -64,8 +64,6 @@ MainFeaturedPost.propTypes = {
   post: PropTypes.shape({
     description: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
-    imageText: PropTypes.string.isRequired,
-    linkText: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
   }).isRequired,
 };

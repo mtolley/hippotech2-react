@@ -83,7 +83,6 @@ export default function ApprovalRequest() {
     } else if (activeStep === 1) {
       setIsValid(true);
     } else if (activeStep === 2) {
-      console.log("Submitting...");
       server.requestApproval({
         address1: addressState.address1,
         address2: addressState.address2, 

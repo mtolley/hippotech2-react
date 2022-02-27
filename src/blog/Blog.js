@@ -62,7 +62,6 @@ export default function Blog() {
   React.useEffect(() => {
     async function loadData() {
       const result = await server.getBlogPostsAsync();
-      console.log(result[0]);
       setPosts(result);
     }
     loadData();
@@ -79,8 +78,8 @@ export default function Blog() {
         }
         {
           posts.length >1 && <Grid container spacing={4}>
-            {posts.slice(1).map((post) => (
-              <FeaturedPost key={post.title} post={post} />
+            {posts.slice(1).map((post, i) => (
+              <FeaturedPost key={post.title} post={post} postNumber={i+2} />
             ))}
           </Grid>
         }

@@ -1,45 +1,18 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Copyright from '../Copyright';
 import Card from '@mui/material/Card';
-import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
+import Grid from '@mui/material/Grid';
 import server from '../server.js';
 import { useParams } from "react-router-dom";
 import { useAuth } from '../Auth';
-
-// const post = {
-//   title: 'Where next for house prices?',
-//   description:
-//     "Boiling hot house prices in the Netherlands may be a sign of things to come in rich, densely populated countries.",
-//   image: 'blog1.jpg',
-//   imageText: 'main image description',
-//   linkText: 'Continue reading…',
-//   fullText: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-//   comments: [
-//     {
-//       email: "joost@ns.nl",
-//       text: "I'm Dutch, and I just could not disagree more. So I won't!"
-//     },
-//     {
-//       email: "xavierb@synopsys.com",
-//       text: "Je suis entièrement d'accord avec ce sentiment."
-//     }
-//   ]
-// };
+import { formatDate } from '../utils';
 
 function useForceUpdate(){
   const [value, setValue] = React.useState(0); // integer state
@@ -109,7 +82,7 @@ export default function FullPost() {
               {post.title}
             </Typography>
             <Typography variant="subtitle1" color="text.secondary">
-              {post.date}
+              {formatDate(post.date)}
             </Typography>
             <Typography variant="subtitle1" paragraph>
               {post.description}

@@ -15,31 +15,7 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import server from './server';
-
-function createData(address1, status, purchasePrice, amountToBorrow) {
-  return {
-    address1,
-    status,
-    purchasePrice,
-    amountToBorrow,
-    history: [
-      {
-        id: '1',
-        date: '2020-01-05',
-        party: 'Customer',
-        event: 'Created',
-        details: 'Submitted for approval'
-      },
-      {
-        id: '2',
-        date: '2020-01-05',
-        party: 'HippoTech',
-        event: 'Agreement in Principal',
-        details: 'Agreement in principal subject to lender checks and property valuation'
-      },
-    ],
-  };
-}
+import { formatDate } from './utils';
 
 function Row(props) {
   const { row } = props;
@@ -57,12 +33,12 @@ function Row(props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell class="mortgageAddress" component="th" scope="row">
+        <TableCell className="mortgageAddress" component="th" scope="row">
           {row.address1}
         </TableCell>
-        <TableCell class="mortgageStatus" align="right">{row.status}</TableCell>
-        <TableCell class="mortgagePurchasePrice" align="right">{row.purchasePrice}</TableCell>
-        <TableCell class="mortgageAmountToBorrow" align="right">{row.amountToBorrow}</TableCell>
+        <TableCell className="mortgageStatus" align="right">{row.status}</TableCell>
+        <TableCell className="mortgagePurchasePrice" align="right">{row.purchasePrice}</TableCell>
+        <TableCell className="mortgageAmountToBorrow" align="right">{row.amountToBorrow}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -84,7 +60,7 @@ function Row(props) {
                   {row.history.map((historyRow) => (
                     <TableRow key={historyRow.id}>
                       <TableCell component="th" scope="row">
-                        {historyRow.date}
+                        {formatDate(historyRow.date)}
                       </TableCell>
                       <TableCell>{historyRow.party}</TableCell>
                       <TableCell align="right">{historyRow.event}</TableCell>
@@ -112,7 +88,7 @@ Row.propTypes = {
       PropTypes.shape({
         event: PropTypes.string.isRequired,
         party: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
+        date: PropTypes.object.isRequired,
         details: PropTypes.string
       }),
     ).isRequired,
@@ -125,14 +101,9 @@ export default function MyMortgages() {
   const [dataLoaded, setDataLoaded] = React.useState(false);
 
   React.useEffect(() => {
-    console.log("MyMortgages effect()");
     async function loadData() {
-      console.log("awaiting...");
-
       const myMortgages = await server.getMyMortgagesAsync();
-      console.log(myMortgages);
       setRows(myMortgages);
-      console.log("...awaited.");
     }
     if (!dataLoaded) {
       loadData().catch((error) => {

@@ -7,14 +7,14 @@ const mortgage1 = {
   history: [
     {
       id: 1,
-      date: '2020-01-05',
+      date: new Date(2020, 1, 5),
       party: 'Customer',
       event: 'Created',
       details: 'Submitted for approval'
     },
     {
       id: '2',
-      date: '2020-01-05',
+      date: new Date(2020, 2, 15),
       party: 'HippoTech',
       event: 'Agreement in Principal',
       details: 'Agreement in principal subject to lender checks and property valuation'
@@ -32,14 +32,14 @@ const mortgage2 = {
   history: [
     {
       id: 1,
-      date: '2020-01-05',
+      date: new Date(2020, 2, 17),
       party: 'Customer',
       event: 'Created',
       details: 'Submitted for approval'
     },
     {
       id: '2',
-      date: '2020-01-05',
+      date: new Date(2020, 4, 22),
       party: 'HippoTech',
       event: 'Agreement in Principal',
       details: 'Agreement in principal subject to lender checks and property valuation'
@@ -50,16 +50,16 @@ const mortgage2 = {
 const blogPost1 = {
   id: 1,
   title: 'Where next for house prices?',
+  date: new Date(2021, 12, 13),
   description:
     "Boiling hot house prices in the Netherlands may be a sign of things to come in rich, densely populated countries.",
   image: 'blog1.jpg',
   imageText: 'main image description',
-  linkText: 'Continue reading…',
   fullText: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
   comments: [
     {
       email: "joost@ns.nl",
-      text: "I'm Dutch, and I just could not disagree more. So I won't!"
+      text: "I could not disagree more. So I won't!"
     },
     {
       email: "xavierb@synopsys.com",
@@ -72,7 +72,7 @@ const blogPost2 =
   {
     id: 2,
     title: 'A Cornish treat',
-    date: 'Nov 12',
+    date: new Date(2022, 1, 1),
     description:
       'A small country estate nestled amongst 23 acres of rolling Cornish countryside, just a stone’s throw from Falmouth — for sale for £1.85 million',
     image: 'blog2.jpg',
@@ -85,7 +85,7 @@ const blogPost3 =
   {
     id: 3,
     title: 'How to become a ‘power buyer’ in 2022',
-    date: 'Nov 11',
+    date: new Date(2022, 1, 24),
     description:
       'Are you thinking of moving this year? Buyers are facing hot competition right now, with a huge number of people chasing after every available property for sale. So if you’ve been looking to move, you’ve no doubt noticed how competitive it is.',
     image: 'blog3.jpg',
@@ -133,14 +133,13 @@ export default class FakeServer {
   }
 
   async logoutAsync() {
-    console.log('logoutAsync');
     this.authToken = null;
     this.username = null;
     return Promise.resolve();
   }
 
   async getMyMortgagesAsync() {
-    console.log("Awaiting fake latency");
+
     await fakeLatencyAsync();
 
     if (!this.username) {
@@ -198,5 +197,9 @@ export default class FakeServer {
 
   async getBlogPostAsync(id) {
     return Promise.resolve(this.blogPosts.get(parseInt(id)));
+  }
+
+  async subscribeToBlog(email, partnersIncluded) {
+    // The test server does nothing...
   }
 }

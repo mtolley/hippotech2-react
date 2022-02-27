@@ -5,8 +5,6 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { InputAdornment } from '@mui/material';
-import { useState } from 'react';
-import { ElevenMpTwoTone } from '@mui/icons-material';
 
 function CurrencyField(props) {
   return <TextField {...props}
@@ -18,7 +16,6 @@ function CurrencyField(props) {
 export default function AddressForm({ fields, onChange }) {
   function handleInput(event) {
     let newFields;
-    console.log(event.target.name);
     if (event.target.name === 'iUnderstand') {
       newFields = { ...fields, iUnderstand: event.target.checked };
     } else {
