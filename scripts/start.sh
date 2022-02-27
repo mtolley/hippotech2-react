@@ -8,9 +8,7 @@ server_pid=$!
 echo "Server pid: $server_pid"
 echo "Output: $output"
 echo "Wait:"
-sleep 30
-cat $output
-until grep -q -i 'You can now view hippotech-react in the browser.' $output
+until grep -q -i 'compiled' $output
 do
   if ! ps $server_pid > /dev/null
   then
@@ -20,5 +18,6 @@ do
   echo -n "."
   sleep 1
 done
+curl http://localhost:3000
 echo
 echo "HippoTech front-end is running."
