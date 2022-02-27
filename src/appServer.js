@@ -73,7 +73,13 @@ export default class AppServer {
       email,
       partnersIncluded
     };
-    await axios.post(url, data);   
+    try {
+      await axios.post(url, data);   
+    } catch (e) {
+      logError('suscribeToBlog() POST failed');
+      logError(e);
+    }
+    
   }
 
   async getBlogPostsAsync() {

@@ -28,3 +28,5 @@ jobs:
         cache: 'npm'
     - run: npm install
     - run: ./scripts/start.sh
+    - run: cd e2e-test && npm install
+    - run: cd e2e-test && npx cypress run
