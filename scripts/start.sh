@@ -2,6 +2,7 @@
 
 echo "Starting HippoTech 2.0 React front end"
 output=$(mktemp "${TMPDIR:-/tmp/}$(basename 0).XXX")
+npm start
 npm start  &> $output &
 server_pid=$!
 echo "Server pid: $server_pid"
