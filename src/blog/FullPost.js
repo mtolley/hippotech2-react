@@ -13,6 +13,8 @@ import server from '../server.js';
 import { useParams } from "react-router-dom";
 import { useAuth } from '../Auth';
 import { formatDate } from '../utils';
+import BadLanguageModal from '../BadLanguageModal';
+import { Co2Sharp, SettingsInputAntenna } from '@mui/icons-material';
 
 function useForceUpdate(){
   const [value, setValue] = React.useState(0); // integer state
@@ -24,6 +26,9 @@ const theme = createTheme();
 export default function FullPost() {
   let params = useParams();
   let [comment, setComment]= React.useState("");
+  let [badWord, setBadWord] = React.useState("");
+  let [badPost, setBadPost] = React.useState("");
+
   const forceUpdate = useForceUpdate();
   const auth = useAuth();
 
@@ -36,6 +41,11 @@ export default function FullPost() {
     loadData();
   }, [params]);
 
+  const handleBadWordClose = () => {
+    setBadWord("");
+    setBadPost("");
+  }
+
   const handleChange = (event) => {
     setComment(event.target.value);
   }
@@ -45,10 +55,16 @@ export default function FullPost() {
     const data = new FormData(event.currentTarget);
 
     async function postComment() {
-      await server.submitCommentAsync(params.blogId, data.get('comment'));
-      const newPost = await server.getBlogPostAsync(params.blogId);
-      setPost(newPost);
-      forceUpdate();
+      const response = await server.submitCommentAsync(params.blogId, data.get('comment'));
+      if (response && response.error) {
+        console.log("Bad word!" + response.word);
+        setBadWord(response.word);
+        setBadPost(data.get('comment'));
+      } else {
+        const newPost = await server.getBlogPostAsync(params.blogId);
+        setPost(newPost);
+        forceUpdate();
+      }
     }
 
     postComment();
@@ -56,9 +72,22 @@ export default function FullPost() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
-        <CssBaseline />
+    //<ThemeProvider theme={theme}>
+
+         
+    // <Grid
+    //   container
+    //   spacing={0}
+    //   direction="column"
+    //   alignItems="center"
+    //   component="main"
+    //   justifyContent="top"
+    //   sx={{ height: '100vh' }}
+    //   style={{ minHeight: '100vh', padding: '50px' }}
+    // >  
+      // <Grid container component="main" sx={{ height: '100vh' }}>
+      <Grid  style={{ minHeight: '100vh', padding: '50px' }} container component="main" > 
+        {/* <CssBaseline /> */}
         <Grid
           item
           xs={false}
@@ -128,10 +157,12 @@ export default function FullPost() {
           </Box>
           }  
           </CardContent>
+          { badWord && <BadLanguageModal badWord={badWord} onClose={handleBadWordClose} badPost={badPost} /> }
         </Card>
           }
         </Grid>
       </Grid>
-    </ThemeProvider>
+      
+ //   </ThemeProvider>
   );
 }

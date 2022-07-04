@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import Table from '@mui/material/Table';
+import Button from '@mui/material/Button';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -37,8 +38,11 @@ function Row(props) {
           {row.address1}
         </TableCell>
         <TableCell className="mortgageStatus" align="right">{row.status}</TableCell>
-        <TableCell className="mortgagePurchasePrice" align="right">{row.purchasePrice}</TableCell>
-        <TableCell className="mortgageAmountToBorrow" align="right">{row.amountToBorrow}</TableCell>
+        <TableCell className="mortgagePurchasePrice" align="right">${row.purchasePrice}</TableCell>
+        <TableCell className="mortgageAmountToBorrow" align="right">${row.amountToBorrow}</TableCell>
+        <TableCell className="actionButtons" align="right">
+          { row.status !== "Withdrawn" && <Button color="error" onClick={ () => props.onWithdrawApplication(row.id) }>Withdraw Application</Button> }
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -81,6 +85,7 @@ function Row(props) {
 
 Row.propTypes = {
   row: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     address1: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
     purchasePrice: PropTypes.number.isRequired,
@@ -114,6 +119,11 @@ export default function MyMortgages() {
     }
   }, [dataLoaded]);
 
+  async function handleWithdrawApplication(id) {
+    await server.withdrawApplication(id);
+    setDataLoaded(false);
+  }
+
   return (
     <Grid
     container
@@ -132,11 +142,12 @@ export default function MyMortgages() {
             <TableCell align="right">Status</TableCell>
             <TableCell align="right">Purchase Price</TableCell>
             <TableCell align="right">Amount To Borrow</TableCell>
+            <TableCell align="right">Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <Row key={row.address1} row={row} />
+            <Row key={row.address1} row={row} onWithdrawApplication={handleWithdrawApplication}/>
           ))}
         </TableBody>
       </Table>

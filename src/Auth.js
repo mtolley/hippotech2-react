@@ -23,6 +23,7 @@ export function RequireAuth({ children }) {
 export function AuthProvider({ children }) {
   let [user, setUser] = React.useState(null);
   let signin = async (username, password, callback) => {
+    console.log("Signing in...");
     const result = await server.loginAsync(username, password);
     if (result) setUser({ username });
     return result;

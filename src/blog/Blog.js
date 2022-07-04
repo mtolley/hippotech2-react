@@ -68,8 +68,9 @@ export default function Blog() {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    // <ThemeProvider theme={theme}>
+    //   <CssBaseline />
+    <Grid  style={{ minHeight: '100vh', padding: '50px' }} container component="main" > 
       <Container maxWidth="lg">
         <Header title="Blog" sections={sections} />
         <main>
@@ -86,10 +87,9 @@ export default function Blog() {
 
         </main>
       </Container>
-      <Footer
-        title="Footer"
-        description="Something here to give the footer a purpose!"
-      />
-    </ThemeProvider>
+
+      {/* </ThemeProvider> */}
+    </Grid>
+     
   );
 }

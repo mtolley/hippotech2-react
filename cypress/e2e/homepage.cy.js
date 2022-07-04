@@ -8,7 +8,7 @@
 describe('Homepage', () => {
   it('Provides a link to Get Me A Mortgage', () => {
     cy.visit('/');
-    cy.get('#goToApproval').should('contain', 'GetX me a mortgage');
+    cy.get('#goToApproval').should('contain', 'Get me a mortgage');
   });
   it('Is logged out by default', () => {
     cy.visit('/');

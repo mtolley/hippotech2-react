@@ -68,6 +68,7 @@ function Home() {
         Don't waste your precious time filling in loads of boring old forms ... get an agreement in principle with HippoTech today!
         </Typography>
         <br/>
+        
         <Button 
           id="goToApproval"
           sx={{ fontSize: 20 }} 
@@ -75,6 +76,7 @@ function Home() {
           onClick={ () => navigate('/approval') }>
           Get me a mortgage!
         </Button>
+
         <ArrowUpwardIcon sx={{ fontSize: 80 }} color="primary"></ArrowUpwardIcon>
         <Copyright />
       </Grid>

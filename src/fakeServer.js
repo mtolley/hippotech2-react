@@ -13,7 +13,7 @@ const mortgage1 = {
       details: 'Submitted for approval'
     },
     {
-      id: '2',
+      id: 2,
       date: new Date(2020, 2, 15),
       party: 'HippoTech',
       event: 'Agreement in Principal',
@@ -38,7 +38,7 @@ const mortgage2 = {
       details: 'Submitted for approval'
     },
     {
-      id: '2',
+      id: 2,
       date: new Date(2020, 4, 22),
       party: 'HippoTech',
       event: 'Agreement in Principal',
@@ -181,9 +181,38 @@ export default class FakeServer {
     this.nextMortgageId++;
   }
 
+  async withdrawApplication(id) {
+    const mortgage = this.myMortgages.get(id);
+    if (mortgage) {
+      const newEventId = mortgage.history.length + 1;
+      console.log("New ID: " + newEventId);
+      mortgage.history.push({
+        id: newEventId,
+        date: new Date(),
+        party: 'Customer',
+        event: 'Application withdrawn',
+        details: 'The application was withdrawn by request of the customer online'
+      });
+      mortgage.status = "Withdrawn"
+    } else {
+      throw new Error("Tried to withdraw application for non-existant mortgate: " + id);
+    }
+  }
+
+  async submitJustification(justification) {
+    console.log("Justification received.");
+    return Promise.resolve();
+  }
+
   async submitCommentAsync(postId, text) {
     const post = this.blogPosts.get(parseInt(postId));
     if (post !== undefined) {
+      if (text.toUpperCase().includes('IDIOT')) {
+        return { error: 'Bad Language', word: 'idiot' }
+      }
+      if (text.toUpperCase().includes('PIPEAU')) {
+        return { error: 'Bad Language', word: 'pipeau' }
+      }
       const user = await this.getUserAsync();
       post.comments.push({ email: user.email, text });
     } 

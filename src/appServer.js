@@ -11,6 +11,9 @@ export default class AppServer {
   isLoggedIn() { return !!this.authToken; }
 
   async loginAsync(username, password) {  
+    console.log(username);
+    console.log(password);
+
     const result = await axios.post('/api/authenticate', { username, password});
     console.log(result.data);
 
@@ -64,7 +67,27 @@ export default class AppServer {
         'Content-Type': 'text/plain'
       }
     }
-    await axios.post(url, text, options);
+    try {
+      await axios.post(url, text, options);
+    } catch (error) {
+      console.log(error.response);
+      return error.response.data;
+    }
+  }
+
+  async submitJustification(post, justification) {
+    const url = '/api/blog/justification';
+    const options = {
+      headers: {
+        Authorization: this.authToken,
+      }
+    }
+    try {
+      await axios.post(url, { post, justification }, options);
+    } catch (error) {
+      console.log(error.response);
+      return error.response.data;
+    }
   }
 
   async subscribeToBlog(email, partnersIncluded) {
