@@ -14,7 +14,7 @@ describe('Login', () => {
     cy.url().should('include', '/login');
 
     // Sign in with email and password
-    cy.get('#email').type('mtolley@synopsys.com');
+    cy.get('#email').type('siguser@synopsys.com');
     cy.get('#password').type('password{enter}');
 
     // Check that we are now logged in

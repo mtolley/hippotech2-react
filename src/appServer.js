@@ -25,6 +25,17 @@ export default class AppServer {
     return false;
   }
 
+  async withdrawApplication(id) {
+    const url = '/api/approval/' + id;
+    const options = {
+      headers: {
+        Authorization: this.authToken,
+      }
+    }
+    await axios.delete(url, options);
+  }
+
+
   async logoutAsync() {
     console.log('logoutAsync');
     this.authToken = null;

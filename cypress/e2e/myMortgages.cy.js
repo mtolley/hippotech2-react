@@ -14,7 +14,7 @@ describe('My Mortages', () => {
 
     // We should be redirected to the login page, so let's log in
     cy.url().should('include', '/login');
-    cy.get('#email').type('mtolley@synopsys.com');
+    cy.get('#email').type('siguser@synopsys.com');
     cy.get('#password').type('password{enter}');
     cy.url().should('include', '/myMortgages');
 

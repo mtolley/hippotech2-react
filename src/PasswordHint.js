@@ -4,7 +4,7 @@ export default function PasswordHint() {
   return (
     <>
       <Typography variant="body2" color="text.secondary" align="center">
-        Username:mtolley@synopsys.com
+        Username:siguser@synopsys.com
       </Typography>
       <br/>
       <Typography variant="body2" color="text.secondary" align="center">

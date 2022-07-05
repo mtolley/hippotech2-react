@@ -124,9 +124,9 @@ export default class FakeServer {
 
   async loginAsync(username, password) {
     console.log('loginAsync');
-    if (username === "mtolley@synopsys.com" && password === "password") {
+    if (username === "siguser@synopsys.com" && password === "password") {
       this.authToken = "12345";
-      this.username = "mtolley@synopsys.com";
+      this.username = "siguser@synopsys.com";
       return Promise.resolve(true);
     }
     return Promise.resolve(false);

@@ -37,7 +37,7 @@ describe('Blog', () => {
 
     // Now check that we have the 3 lead stories we are expecting
     cy.contains('Subscribe').click();
-    cy.get('#email').type('mtolley@synopsys.com');
+    cy.get('#email').type('siguser@synopsys.com');
     cy.get('#includePartners').click();
     cy.get('#subscribeButton').click();
   });
